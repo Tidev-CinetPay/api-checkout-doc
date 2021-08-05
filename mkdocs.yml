@@ -1,0 +1,56 @@
+site_name: CinetPay
+site_url: https://www.cinetpay.com/
+site_author: Jean-Marc Dje Bi
+copyright: Copyright &copy; 2021 CinetPay
+
+docs_dir: docs
+
+theme:
+  name: material
+  language: fr
+
+  favicon: img/favicon.ico
+
+  # icon:
+  # logo: 'img/logo'
+
+  palette:    
+    primary: teal
+    accent: teal
+  
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - header.autohide
+
+
+
+nav:
+  - 🚩 Introduction: index.md
+  - ⚙️ API de Checkout : l'api-de-checkout.md
+  - 🚀 Intégration : integration.md
+
+markdown_extensions:
+    - admonition
+    - pymdownx.details
+    - pymdownx.highlight
+    - pymdownx.inlinehilite
+    - pymdownx.tabbed
+    - pymdownx.superfences:
+        custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+    - pymdownx.emoji
+    - attr_list
+
+plugins:
+  - search
+
+extra:
+  generator: false
