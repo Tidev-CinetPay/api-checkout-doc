@@ -27,6 +27,8 @@ theme:
     - search.highlight
     - search.share
     - header.autohide
+    - toc.integrate
+    - navigation.expand
 
 
 

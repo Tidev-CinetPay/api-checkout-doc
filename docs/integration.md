@@ -1,5 +1,5 @@
 !!! Warning "Avant-propos"
-        Pour comprendre le comment de l'intégration de l'***API de Checkout***, assurez vous de comprendre les notions d'***APIKEY***, ***SITEID*** et d'***url de notification***. Si vous ne comprenez pas ces notions, nous vous recommandons de lire ou relire la page sur l'[API de Checkout](/l'api-de-checkout)
+        Assurez vous de comprendre les notions d'***APIKEY***, ***SITEID*** et d'***url de notification***. Si vous ne comprenez pas ces notions, nous vous recommandons de lire ou relire la page sur l'[API de Checkout](/l'api-de-checkout)
 
 ## Mise en route
 
@@ -8,21 +8,23 @@ L'intégration de l'API de Checkout s'inscrit dans le cadre de la mise en place 
 !!! Info "Exemple"
         La gestion des paiements sur un site de dons ne sera pas la même que celle d'un site d'e-commerce.  
 
-Peu importe votre situation, vous devrez toujours suivre les étapes suivantes:
+Peu importe votre situation, vous devrez toujours veiller à suivre les étapes suivantes:
 
 1. [Initialisation d'un paiement](#initialisation-d'un-paiement)
 2. [Reception des statuts des paiements](#reception-des-status-des-paiements)
 3. [Vérification d'un paiement](#verification-d'un-transaction)
 
-Chacune de ces étapes est réalisable à partir d'un endpoint exposé par l'API, sauf pour la reception, qui est une étape qui requiert que vous définissiez votre propre endpoint ([Voir la section sur l'url de notification](#sorry-iam-tired)).
+Les étapes est réalisable à partir d'endpoints exposé par l'API, sauf pour la reception, qui est une étape qui requiert que vous définissiez votre propre endpoint ([Voir la section sur l'url de notification](/l%27api-de-checkout/#la-notification)).
 
 ## Initialisation d'un paiement
 
-L'endpoint d'initialisation vous permet de commecer un paimenent par **la génération d'un lien unique vers le guichet de paiement**. 
+Dans l'intégration l'endpoint d'initialisation vous permet de commencer un paimenent par **la génération d'un lien unique vers le guichet de paiement**. 
 
-Il s'agira pour vous d'envoyer une requête de type `POST` au endpoint avec les informations qui caractérisent un paiement, en plus d'une url de notification (`notify_url`) et d'une url de retour (`return_url`) dans le format `JSON`, dans le but de générer un lien vers le guichet de paiement. 
+Il s'agira pour vous d'envoyer une requête de type `POST` au endpoint avec les informations qui caractérisent un paiement, en plus d'une url de notification (`notify_url`) et d'une url de retour (`return_url`). 
 
-La reponse de cet endpoint contient un token (`payment_token`) et le lien vers le guichet (`payment_url`). Utiliser
+L'objectif est de générer un lien vers le guichet de paiement. 
+
+La reponse de cet endpoint contient en particulier un token (`payment_token`) et le lien vers le guichet (`payment_url`). Utiliser
 ce lien pour rediriger votre client vers le guichet.
 
 <h5>Endpoint</h5>
@@ -61,10 +63,10 @@ POST https://api-checkout.cinetpay.com/v2/payment
 | `GNF`  | Guinée                                            |
 
 !!! Question "Retour sur les paramètres `transaction_id` et `return_url`"
-        - Le paramètre `transaction_id` doit être unique. En effet, il s'agit de l'identifiant du paiement et sera utilisé  pour retrouver votre paiement. Vous devez le générer vous même, et vous assurer qu'il est unique. Si vous envoyez un identifiant déjà envoyé, alors vous recevrez un message d'erreur en reponse.   
+        - Le paramètre `transaction_id` doit être unique. En effet, il s'agit de l'identifiant du paiement du côté de votre boutique. Vous devez le générer vous même, et vous assurer qu'il soit unique. Si vous envoyez un identifiant déjà envoyé, alors vous recevrez un message d'erreur en reponse.   
 
         - Le paramètre `return_url` contient le lien vers la page où le client sera redirigé après le paiement. Ce lien
-        est censé pointer sur une page de votre boutique. CinetPay se chargera d'effectuer la rédirection dès la fin d'un paiement en lisant la valeur associé au paramètre. De votre côté vous devez toujours vous assurez que ce lien est fonctionnel.
+        est censé pointer sur une page de votre boutique. CinetPay se chargera d'effectuer la rédirection dès la fin d'un paiement par la lecture de la valeur associé au paramètre. De votre côté vous devez toujours vous assurez que ce lien est fonctionnel.
 
 <h5>Paramètres de reponse</h5>
 
@@ -156,12 +158,12 @@ Vous trouverez dans le tableau ci-dessous l'ensemble des paramètres que peut re
 
 ## Reception des statuts des paiements
 
-Cet endpoint correspond à l'url de notification que vous envoyés (`notify_url`) lors de l'initialisation de vos paiements. CinetPay lui envera via une requête de type `POST` une notification signifiant que votre paiement a changé de statut. Vous devrez alors analyser les paramètres de la requête afin de faire réagir votre système selon votre modèle d'intégration. Notez que les données sont au format `JSON`.
+La reception des statuts des paiements est effectuée par l'endpoint correspondant à l'url de notification que vous envoyés (`notify_url`) lors de l'initialisation de vos paiements. CinetPay lui enverra via une requête de type `POST` une notification signifiant que votre paiement a changé de statut. Vous devrez alors analyser les paramètres de la requête afin de faire réagir votre système selon votre modèle d'intégration.
 
 Souvenez vous, la notification ne vous donne pas le statut d'un paiement. Il vaut faudra utiliser l'endpoint de vérification pour avoir le statut ([Voir les references de l'endpoint de vérification](#verification-d'un-paiement)).
 
 !!! Info "Exemple d'un modèle d'intégration d'un site d'e-commerce"
-        Le déclenchement du processus de livraison d'une commande d'un client avec une notifcation par mail et par SMS.
+        Le déclenchement du processus de livraison d'une commande d'un client suivi d'une notifcation par mail et par SMS.
 
 <h5>Paramètres d'une notification</h5>
 
@@ -179,7 +181,7 @@ Souvenez vous, la notification ne vous donne pas le statut d'un paiement. Il vau
 }
 ```
 
-Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au post-traitement du paiement selon les recommandations que nous vous avons donné.
+Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au post-traitement du paiement selon les recommandations donné au niveau des sections sur les bonnes pratiques.
 
 !!! Warning "Marquons une pause"
         Avant de continuer, vous êtes priés de relire nos recommandations au sujet des bonnes pratique sur le post-traitement d'un paiement après la reception d'une notification. Nous vous invitons à relire les sections [bon à savoir](/l'api-de-checkout/#bon-a-savoir) et [conseils d'usage](/l'api-de-checkout/#conseils-d'usage).
@@ -302,7 +304,7 @@ Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au p
         transaction_status = verifyPaymentStatus(transaction_id, site_id);
 
         // Récupère le statut du paiement
-        let trans_status_message = $transaction_status["message"];
+        let trans_status_message = transaction_status["message"];
 
         if(trans_status_message == "SUCCESS"){
             if(checkIfPaymentIsAlreadySuccess()){
@@ -334,7 +336,7 @@ Retenez que la reception des statuts des paiements vous permet de mettre en plac
 
 ## Vérification d'un paiement
 
-Cet endpoint permet de vérifier le statut d'un paiement de façon sécurisé. Pour ce faire il faudra lui envoyer une requête `POST` au format `JSON` avec les données précisées dans le tableau ci-dessous. En reponse vous aurez un `JSON` contenant un message qui caractérise le statut de la transaction.
+Cet endpoint permet de vérifier le statut d'un paiement de façon sécurisé. Pour ce faire il faudra lui envoyer une requête `POST` avec les données précisées dans le tableau ci-dessous. En reponse vous aurez un `JSON` contenant un message qui caractérise le statut de la transaction.
 
 <h5>Endpoint</h5>
 
@@ -348,12 +350,12 @@ POST https://api-checkout.cinetpay.com/v2/payment/check
 
 <h5>Paramètres de requête</h5>
 
-| Nom              | Type   | Description               |
-|------------------|--------|---------------------------|
-| `apikey`         | string | Votre APIKEY              |
-| `site_id`        | string | Votre SITEID              |
-| `transaction_id` | string | Identifiant du paiement   |
-| `payment_token`  | string | Jeton associé au paiement |
+| Nom                               | Type   | Description               |
+|-----------------------------------|--------|---------------------------|
+| `apikey`                          | string | Votre APIKEY              |
+| `site_id`                         | string | Votre SITEID              |
+| `transaction_id`                  | string | Identifiant du paiement   |
+| `payment_token` (Peut être omis)  | string | Jeton associé au paiement |
 
 !!! Info "Retour sur les paramètres `transaction_id` et `payment_token`"
     Les paramètres `transaction_id` et `payment_token` permettent tout deux de retrouver une transaction. Pour vérifier 
@@ -529,8 +531,8 @@ Vous trouverez dans le tableau ci-dessous l'ensemble des paramètres que peut re
 
 A ce stade vous disposez de toutes les informations nécessaires pour réussir votre intégration. Il vous revient maintenant de mettre en pratique vos nouvelles connaissance dans l'implémentation de votre modèle d'intégration. 
 
-Au cas où vous ne savez pas quoi faire ou rencontrez des difficultés de compréhension, n'hésitez pas à contactez notre support. Néanmoins nous vous recommandons de relire cette documentation jusqu'à la maitriser sur le bout des doigts car c'est forgeant qu'on devient forgeron. A bientôt  !
+Au cas où vous ne savez pas quoi faire ou rencontrez des difficultés de compréhension, n'hésitez pas à contactez notre support. Néanmoins nous vous recommandons de relire cette documentation jusqu'à la maitriser sur le bout des doigts.
 
 Adresse du support: [support@cinetpay.com](mailto:support@cinetpay.com)
 
-*Dernière mise à jour le 02/08/2021 par Jean-Marc Dje Bi*
+*Dernière mise à jour le 17/08/2021 par Jean-Marc Dje Bi*
