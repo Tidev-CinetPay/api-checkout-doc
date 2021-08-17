@@ -111,13 +111,13 @@ Les points qui suivent sont a considérer pour une bonne intégration.
 
 Sachant que l'url de notification peut être appelée plusieurs, et pour vous assurer de l’intégrité des données que vous traitez, vous devez effectuer certaines vérifications :
 
-1. Votre url de notification doit être une api qui doit recevoir un appel en POST avec comme données d'entrée le `cpm_trans_id` (Correspondant à l'identifiant du paiement) et le `cmp_site_id` (Correspondant à votre SITEID)
+1. Votre url de notification doit être une api qui doit recevoir un appel en POST avec comme données d'entrée le `cpm_trans_id` (Correspondant à l'identifiant du paiement) et le `cpm_site_id` (Correspondant à votre SITEID)
 
 2. Après les avoir obtenu suite à la reception d'une requête de notification venant de CinetPay, vous devez toujours vérifier dans votre base de données si le statut du paiement concerné est déjà à succès :
 
     - Si oui alors vous ne faites plus de mise à jour
 
-    - Sinon vous devez faire un appel à l’api de vérification de transaction avec le `cpm_trans_id` et le `cmp_site_id`, pour obtenir le statut de la transaction chez CinetPay et mettre ainsi à jour le statut dans votre base de données.
+    - Sinon vous devez faire un appel à l’api de vérification de transaction avec le `cpm_trans_id` et le `cpm_site_id`, pour obtenir le statut de la transaction chez CinetPay et mettre ainsi à jour le statut dans votre base de données.
 
 ---
 

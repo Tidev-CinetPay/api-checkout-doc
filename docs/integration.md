@@ -58,7 +58,7 @@ POST https://api-checkout.cinetpay.com/v2/payment
 | `XOF`  | Burkina Faso, Côte d'Ivoire, Mali, Togo, Sénégal  |
 | `XAF`  | Cameroun                                          |
 | `CDF`  | République Démocratique du Congo                  |
-| `GBF`  | Guinée                                            |
+| `GNF`  | Guinée                                            |
 
 !!! Question "Retour sur les paramètres `transaction_id` et `return_url`"
         - Le paramètre `transaction_id` doit être unique. En effet, il s'agit de l'identifiant du paiement et sera utilisé  pour retrouver votre paiement. Vous devez le générer vous même, et vous assurer qu'il est unique. Si vous envoyez un identifiant déjà envoyé, alors vous recevrez un message d'erreur en reponse.   
@@ -291,8 +291,8 @@ Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au p
     */
     function postPaymentProcessing(notify_data){
        
-        let transaction_id = $notify_data.cpm_trans_id; 
-        let site_id        = $notify_data.cpm_site_id;
+        let transaction_id = notify_data.cpm_trans_id; 
+        let site_id        = notify_data.cpm_site_id;
 
         /*
             On suppose que la fonction verifyPaymentStatus 
@@ -356,8 +356,8 @@ POST https://api-checkout.cinetpay.com/v2/payment/check
 | `payment_token`  | string | Jeton associé au paiement |
 
 !!! Info "Retour sur les paramètres `transaction_id` et `payment_token`"
-    Les paramètres `transaction_id` et `payment_token` permettent tout deux de retouver une transaction. Pour vérifier 
-    le statut d'un paiement. Vous n'est pas obligé d'utiliser les deux car un seul suffit pour retrouver un paiement.
+    Les paramètres `transaction_id` et `payment_token` permettent tout deux de retrouver une transaction. Pour vérifier 
+    le statut d'un paiement. Vous n'êtes pas obligés d'utiliser les deux car un seul suffit pour retrouver un paiement.
 
 <h5>Paramètres d'une reponse</h5>
 

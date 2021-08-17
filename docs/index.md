@@ -1,10 +1,9 @@
 ## Découvrez notre API de Checkout
 
-Bienvenue dans la documentation de l'API de Checkout de CinetPay. Vous y trouverez le comment de son intégration
-dans une application web/mobile pas à pas au travers d'exemples. Par ailleurs, il existe des SDK dans différents langages et plateformes facilitant son intégration, néanmoins nous nous focaliserons sur la version HTTP de l'API.
+Bienvenue dans la documentation de l'API de Checkout de CinetPay. Vous y trouverez les informations nécessaires pour comprendre son fonctionnement, avec en plus les étapes et les mécanismes à mettre en place pour son réussir son intégration. 
 
 !!! Tip "Recommandation"
-    Nous vous recommandons d'utiliser les outils tel que `Postman` ou la commande `curl` pour tester les exemples de codes de la documentation. D'ailleurs, nous utiliserons `curl` en premier pour les exemples. Si vous utiliser Windows, alors vous devez utiliser Windows Powershell avec la commande `Invoke-RestMethod `.
+    Nous vous recommandons d'utiliser les outils tel que `Postman` ou la commande `curl` pour tester les exemples d'usages de l'API de la documentation. Si vous utiliser Windows, alors vous devez utiliser Windows Powershell avec la commande `Invoke-RestMethod `.
 
     === "curl"
 
@@ -18,7 +17,7 @@ dans une application web/mobile pas à pas au travers d'exemples. Par ailleurs, 
         Invoke-RestMethod -Method GET -uri "https://jsonplaceholder.typicode.com/todos/1"
         ```
 
-Avant de passer à l'intégration de l'API nous allons commencer par expliquer en détail le fonctionnement de l'API (Recommandé) afin de préparer votre environnement d'intégration. Toutefois vous pouvez passer directement à l'intégration de l'API.
+Comme dis précédemment, nous allons commencer par expliquer en détail le fonctionnement de l'API pour préparer votre environnement d'intégration. Mais vous pouvez très bien passer à la section qui traite de l'intégration de l'API si vous souhaitez obtenir ses références.
 
 [Comprendre l'API](/l'api-de-checkout){ .md-button .md-button--primary } [Commencer l'intégration](/integration){ .md-button }
 
@@ -34,4 +33,4 @@ Adresse du support: [support@cinetpay.com](mailto:support@cinetpay.com)
 |---------|----------|------------------|
 | 1.0.0   | 23/06/21 | Version initiale |
 
-*Dernière mise à jour le 02/08/2021 par Jean-Marc Dje Bi*
+*Dernière mise à jour le 17/08/2021 par Jean-Marc Dje Bi*
