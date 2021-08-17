@@ -1,6 +1,6 @@
 ## Découvrez notre API de Checkout
 
-Bienvenue dans la documentation de l'API de Checkout de CinetPay. Vous y trouverez les informations nécessaires pour comprendre son fonctionnement, avec en plus les étapes et les mécanismes à mettre en place pour son réussir son intégration. 
+Bienvenue dans la documentation de l'API de Checkout de CinetPay. Vous y trouverez les informations nécessaires pour comprendre son fonctionnement et les étapes pour réussir son intégration.
 
 !!! Tip "Recommandation"
     Nous vous recommandons d'utiliser les outils tel que `Postman` ou la commande `curl` pour tester les exemples d'usages de l'API de la documentation. Si vous utiliser Windows, alors vous devez utiliser Windows Powershell avec la commande `Invoke-RestMethod `.
@@ -17,7 +17,9 @@ Bienvenue dans la documentation de l'API de Checkout de CinetPay. Vous y trouver
         Invoke-RestMethod -Method GET -uri "https://jsonplaceholder.typicode.com/todos/1"
         ```
 
-Comme dis précédemment, nous allons commencer par expliquer en détail le fonctionnement de l'API pour préparer votre environnement d'intégration. Mais vous pouvez très bien passer à la section qui traite de l'intégration de l'API si vous souhaitez obtenir ses références.
+Avant de passer à l'intégration, commencer par comprendre le fonctionnement du système de Checkout pour mieux préparer votre environnement d'intégration. 
+
+Toutefois, vous pouvez passer directement à la page qui traite de l'intégration de l'API si vous ne souhaitez qu'obtenir ses références.
 
 [Comprendre l'API](/l'api-de-checkout){ .md-button .md-button--primary } [Commencer l'intégration](/integration){ .md-button }
 
