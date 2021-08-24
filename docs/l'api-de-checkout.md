@@ -60,8 +60,8 @@ Exemple de donnée de notification venant de CinetPay:
 
 ``` json hl_lines="2"
 {
-    "cpm_trans_id":"xxxxxx",
-    "cpm_site_id":"xxxxxx"
+    "cpm_trans_id":"id-de-paiement",
+    "cpm_site_id":"votre-site-id"
 }
 ```
 
@@ -84,9 +84,9 @@ Exemple de la structure de donnée pour l'initialisation d'un paiement avec url 
 
 ``` json hl_lines="9"
 {
-    "amount": 2500,
-    "apikey": "XXXXXXXXXXXXXXXX",
-    "site_id": "XXXXX",
+    "amount": 100,
+    "apikey": "votre-apikey",
+    "site_id": "votre-site-id",
     "currency": "XOF",
     "transaction_id": "REFID12354",
     "description": "TRANSACTION DESCRIPTION",
@@ -123,14 +123,10 @@ Sachant que l'url de notification peut être appelée plusieurs, et pour vous as
 
 ---
 
-<center>
-![Cats clapping](https://thumbs.gfycat.com/MadInformalAmericanmarten-size_restricted.gif)
-</center>
 
-
-🎉 Félicitation vous venez de terminer votre apprentissage du fonctionnement de l'API de Checkout. Vous pouvez passer maintenant, et sereinement 😎, à l'intégration. N'hésitez pas à revenir ici en cas d'imcompréhension.
+🎉 Félicitation vous venez de terminer votre apprentissage du fonctionnement de l'API de Checkout. Vous pouvez passer maintenant à l'intégration. N'hésitez pas à revenir ici en cas d'imcompréhension.
 
 [Comprendre l'intégration](/integration){ .md-button .md-button--primary }
 
-*Dernière mise à jour le 17/08/2021 par Jean-Marc Dje Bi*
+*Dernière mise à jour le 24/08/2021 par Jean-Marc Dje Bi*
 

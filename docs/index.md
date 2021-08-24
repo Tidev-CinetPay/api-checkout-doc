@@ -3,19 +3,7 @@
 Bienvenue dans la documentation de l'API de Checkout de CinetPay. Vous y trouverez les informations nécessaires pour comprendre son fonctionnement et les étapes pour réussir son intégration.
 
 !!! Tip "Recommandation"
-    Nous vous recommandons d'utiliser les outils tel que `Postman` ou la commande `curl` pour tester les exemples d'usages de l'API de la documentation. Si vous utiliser Windows, alors vous devez utiliser Windows Powershell avec la commande `Invoke-RestMethod `.
-
-    === "curl"
-
-        ``` shell
-        $ curl -X GET https://jsonplaceholder.typicode.com/todos/1
-        ```
-
-    === "Powershell"
-
-        ``` powershell
-        Invoke-RestMethod -Method GET -uri "https://jsonplaceholder.typicode.com/todos/1"
-        ```
+    Nous vous recommandons d'utiliser les outils tel que `Postman` ou la commande `curl` pour tester rapidement les exemples d'usages de l'API de la documentation.
 
 Avant de passer à l'intégration, commencer par comprendre le fonctionnement du système de Checkout pour mieux préparer votre environnement d'intégration. 
 
@@ -35,4 +23,4 @@ Adresse du support: [support@cinetpay.com](mailto:support@cinetpay.com)
 |---------|----------|------------------|
 | 1.0.0   | 23/06/21 | Version initiale |
 
-*Dernière mise à jour le 17/08/2021 par Jean-Marc Dje Bi*
+*Dernière mise à jour le 24/08/2021 par Jean-Marc Dje Bi*

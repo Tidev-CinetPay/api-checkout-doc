@@ -5,8 +5,12 @@
 
 L'intégration de l'API de Checkout s'inscrit dans le cadre de la mise en place d'un processus automatique d'encaissement de fonds au sein de votre boutique. En fonction du service à délivrer, vous serez amené à personnaliser votre modèle d'intégration pour qu'il corresponde à vos besoins.
 
-!!! Info "Exemple"
-        La gestion des paiements sur un site de dons ne sera pas la même que celle d'un site d'e-commerce.  
+!!! Info "Exemple de modèles d'integration"
+        La gestion des paiements sur un site de dons et la gestion des commandes d'un site d'e-commerce.
+
+        -  Un site de dons n'a pas forcement besoin de traiter les succès ou les echecs des paiements puisqu'aucun service n'est delivré
+
+        - Un site d'e-commerce doit tenir compte du succès ou de l'echec d'un paiement pour valider ou invalider une commande
 
 Peu importe votre situation, vous devrez toujours veiller à suivre les étapes suivantes:
 
@@ -91,41 +95,193 @@ Vous trouverez dans le tableau ci-dessous l'ensemble des paramètres que peut re
 
 === "curl"
 
-    ``` shell
+    ``` sh
     curl -X POST https://api-checkout.cinetpay.com/v2/payment \
     -H "Content-Type: application/json" \
     -d '{
-            "amount": "2500",
-            "apikey": "@mon-aptkey",
-            "site_id": "@mon-site-id",
+            "amount": 100,
+            "apikey": "votre-apikey",
+            "site_id": "votre-site-id",
             "currency": "XOF",
-            "transaction_id": "@id-de-paiement-hyper-unique",
-            "description:" "TRANSACTION DESCRIPTION",
-            "return_url:" "https://www.exemple.com/return",
+            "transaction_id": "id-de-paiement-unique",
+            "description": "TRANSACTION DESCRIPTION",
+            "return_url": "https://www.exemple.com/return",
             "notify_url": "https://www.exemple.com/notify",
             "customer_name": "Dje Bi",
             "customer_surname": "Jean-Marc"
         }'
     ```
 
-=== "Powershell"
+=== "python"
 
-    ``` powershell
+    ``` python
+    import requests
 
-    $Body = @{
-            amount = 2500,
-            apikey = "@mon-aptkey",
-            site_id = "@mon-site-id",
-            currency = "XOF",
-            transaction_id = "@id-de-paiement-hyper-unique",
-            description = "TRANSACTION DESCRIPTION",
-            return_url = "https://www.exemple.com/return",
-            notify_url = "https://www.exemple.com/notify",
-            customer_name = "Dje Bi",
-            customer_surname = "Jean-Marc"
+    API_KEY = "votre-apikey"
+
+    SITE_ID = "votre-site-id"
+
+    URL = "https://api-checkout.cinetpay.com/v2/payment"
+
+    headers = {
+        "Content-Type": "application/json"
     }
 
-    Invoke-RestMethod -Method POST -ContentType "application/json" -Body $body -uri "https://api-checkout.cinetpay.com/v2/payment"
+    payment = {
+        "amount": 100,
+        "apikey": API_KEY,
+        "site_id": SITE_ID,
+        "currency": "XOF",
+        "transaction_id": "id-de-paiement-unique",
+        "description": "TRANSACTION DESCRIPTION",
+        "return_url": "https://www.exemple.com/return",
+        "notify_url": "https://www.exemple.com/notify",
+        "customer_name": "Dje Bi",
+        "customer_surname": "Jean-Marc"
+        
+    }
+
+    response = requests.post(url=URL, headers=headers, json=payment)
+
+    print(response)
+    ```
+
+=== "javascript"
+
+    ``` javascript
+    const axios = require("axios");
+
+    let API_KEY = "votre-apikey";
+
+    let SITE_ID = "votre-site-id";
+
+    let URL = "https://api-checkout.cinetpay.com/v2/payment";
+
+    let CONFIG = {
+        headers: {'Content-Type': 'application/json'}
+    }
+
+    let payment = {
+        "amount": 100,
+        "apikey": API_KEY,
+        "site_id": SITE_ID,
+        "currency": "XOF",
+        "transaction_id": "id-de-paiement-unique",
+        "description": "TRANSACTION DESCRIPTION",
+        "return_url": "https://www.exemple.com/return",
+        "notify_url": "https://www.exemple.com/notify",
+        "customer_name": "Dje Bi",
+        "customer_surname": "Jean-Marc"    
+    }
+
+    axios.post(URL,payment,CONFIG)
+        .then(function(api_response){
+
+            let response = api_response.data;
+
+            console.log(response);
+
+        })
+        .catch(function(error){
+
+            console.log(error.message);
+
+        });
+    ```
+
+=== "java"
+
+    ``` java
+    public class InitPayment {
+	
+        public static void main(String[] args) throws IOException, InterruptedException {
+        
+            String API_KEY = "votre-apikey"; 
+            
+            String SITE_ID = "votre-site-id";
+            
+            String URL = "https://api-checkout.cinetpay.com/v2/payment";
+            
+            String payment = String.format("{\r\n"
+                    + "        \"amount\": 100,\r\n"
+                    + "        \"apikey\":  \"%s\",\r\n"
+                    + "        \"site_id\": \"%s\",\r\n"
+                    + "        \"currency\": \"XOF\",\r\n"
+                    + "        \"transaction_id\": \"id-de-paiement-unique\",\r\n"
+                    + "        \"description\": \"TRANSACTION DESCRIPTION\",\r\n"
+                    + "        \"return_url\": \"https://www.exemple.com/return\",\r\n"
+                    + "        \"notify_url\": \"https://www.exemple.com/notify\",\r\n"
+                    + "        \"customer_name\": \"Dje Bi\",\r\n"
+                    + "        \"customer_surname\": \"Jean-Marc\"\r\n"
+                    + "        \r\n"
+                    + "    }",API_KEY,SITE_ID);
+                        
+            BodyPublisher requestBody = HttpRequest.BodyPublishers.ofString(payment);
+            
+            try {
+                
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(new URI(URL))
+                        .header("Content-Type","application/json")
+                        .POST(requestBody)
+                        .build();
+                
+                HttpResponse<String> response = HttpClient.newHttpClient().send(request, BodyHandlers.ofString());
+                
+                System.out.println(response.body());
+                
+            } catch (URISyntaxException e) {
+
+                e.printStackTrace();
+                
+            }
+          
+        }
+    }
+    ```
+
+=== "C#"
+
+    ``` c#
+    public class InitPayment {
+
+        public async void initPayment(){
+
+            string API_KEY = "votre-apikey"; 
+            
+            string SITE_ID = "votre-site-id";
+            
+            string URL = "https://api-checkout.cinetpay.com/v2/payment";
+
+            var payment = new 
+            {
+                amount = 100,
+                apikey = API_KEY,
+                site_id = SITE_ID,
+                currency = "XOF",
+                transaction_id = "id-de-paiement",
+                description = "TRANSACTION DESCRIPTION",
+                return_url = "https://www.exemple.com/return",
+                notify_url = "https://www.exemple.com/notify",
+                customer_name = "Dje Bi",
+                customer_surname = "Jean-Marc"
+            };
+
+            string json = JsonConvert.SerializeObject(payment);
+
+            StringContent data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = new HttpClient();
+
+            var response = await client.PostAsync(url, data);
+
+            string result = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine(result);
+            
+        }
+
+    }
     ```
 
 <h6>EXEMPLE DE REPONSE DE SUCCES</h6>
@@ -176,8 +332,8 @@ Souvenez vous, la notification ne vous donne pas le statut d'un paiement. Il vau
 
 ``` json
 {
-    "cpm_trans_id":"@mon-site-id",
-    "cpm_site_id":"@id-de-paiement-hyper-unique"
+    "cpm_trans_id":"id-de-paiement",
+    "cpm_site_id":"votre-site-id"
 }
 ```
 
@@ -187,6 +343,9 @@ Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au p
         Avant de continuer, vous êtes priés de relire nos recommandations au sujet des bonnes pratique sur le post-traitement d'un paiement après la reception d'une notification. Nous vous invitons à relire les sections [bon à savoir](/l'api-de-checkout/#bon-a-savoir) et [conseils d'usage](/l'api-de-checkout/#conseils-d'usage).
 
 <h6>EXEMPLE DE POST-TRAITEMENT</h6>
+
+!!! Info "Remarque"
+    L'exemple qui suit est un squelette d'implementations d'un post-traitement dans un site d'e-commerce dans different langages. Il n'est qu'à titre illustratif et vous pouvez vous en inspirer pour definir votre post-traitement.
 
 === "python"
 
@@ -200,8 +359,12 @@ Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au p
             de la notification.
         """
 
+        # 0. La fonction est appelée lors de la reception d'un statut final par le developpeur
+
         transaction_id = notify_data["cpm_trans_id"] 
         site_id        = notify_data["cpm_site_id"]
+
+        # 1. Recuperation du statut final de la transaction
 
         """
         On suppose que la fonction verifyPaymentStatus 
@@ -210,28 +373,45 @@ Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au p
         """
         transaction_status = verifyPaymentStatus(transaction_id, site_id)
 
-        # Lecture du statut du paiement
+        # 2. Lecture du statut du paiement
         trans_status_message = transaction_status["message"]
 
-        if(trans_status_message == "SUCCESS"):
-            if(checkIfPaymentIsAlreadySuccess()):
-                # La transaction a déjà été mise a jour
+        # 3. Analyse du statut final
+
+        if(trans_status_message == "SUCCESS"): # En cas de succès
+
+            # 4. Vérifier si le paiement est deja a success
+
+            """
+            On suppose que la fonction checkIfPaymentIsAlreadySuccess 
+            permet de vérifier que le paiement est déjà à succès dans la base de données des paiments du site
+            """
+
+            if(checkIfPaymentIsAlreadySuccess(transaction_id)):
+
+                # La transaction a déjà été mise à jour
+
                 pass
+
             else:
-                # Mise à jour du statut de paiement
-                updatePaymentStatus(transaction_id)
-                
-                # Envoie d'une notification au client par mail
-                sendClientSuccessPaymentEmail(transaction_id)
+                # 5. Mettre à jour le statut de paiement
 
-                # Envoie d'une notification au client par SMS
-                sendClientSuccessPaymentSMS(transaction_id)
+                # 6. Envoyer une notification au client par mail
 
-        elif(trans_status == "PAYMENT_FAILED"):
+                # 7. Envoyer une notification au client par mail
+
+                pass
+
+        elif(trans_status == "PAYMENT_FAILED" or trans_status == "INSUFFISENT_BALANCE"): # En cas d'echec
+
             # Annulation de la commande du client concerné
-            cancelClientCommand(transaction_id)
+
+            pass
+
         else:
+
             # Statut non pris en charge
+
             pass
     ```
 === "php"
@@ -246,9 +426,13 @@ Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au p
         * de la notification.
         */
         function postPaymentProcessing($notify_data):
+
+            // 0. La fonction est appelée lors de la reception d'un statut final par le developpeur
         
             $transaction_id = $notify_data["cpm_trans_id"]; 
             $site_id        = $notify_data["cpm_site_id"];
+
+            // 1. Recuperation du statut final de la transaction
 
             /*
                 On suppose que la fonction verifyPaymentStatus 
@@ -257,27 +441,41 @@ Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au p
             */
             $transaction_status = verifyPaymentStatus($transaction_id, $site_id);
 
-            // Lecture du statut du paiement
+            // 2. Lecture du statut du paiement
             $trans_status_message = $transaction_status["message"];
 
-            if($trans_status_message == "SUCCESS"){
-                if(checkIfPaymentIsAlreadySuccess()){
-                    // La transaction a déjà été mise a jour
-                }else{
-                    // Mise à jour du statut de paiement
-                    updatePaymentStatus($transaction_id);
-                    
-                    // Envoie d'une notification au client par mail
-                    sendClientSuccessPaymentEmail($transaction_id);
+            // 3. Analyse du statut final
 
-                    // Envoie d'une notification au client par SMS
-                    sendClientSuccessPaymentSMS($transaction_id);
-            
-            }else if($trans_status == "PAYMENT_FAILED"){
+            if($trans_status_message == "SUCCESS"){ // En cas de succès
+
+                // 4. Vérifier si le paiement est déjà a success
+
+                /*
+                    On suppose que la fonction checkIfPaymentIsAlreadySuccess 
+                    permet de vérifier que le paiement est déjà à succès dans la base de données des paiments du site
+                */
+
+                if(checkIfPaymentIsAlreadySuccess(transaction_id)){
+
+                    // La transaction a déjà été mise à jour
+                    
+                }else{
+
+                    // 5. Mettre à jour le statut de paiement
+
+                    // 6. Envoyer une notification au client par mail
+
+                    // 7. Envoyer une notification au client par mail
+
+                }
+            }else if($trans_status == "PAYMENT_FAILED" || $trans_status == "INSUFFISENT_BALANCE"){
+
                 // Annulation de la commande du client concerné
-                cancelClientCommand($transaction_id);
+
             }else{
+
                 // Statut non pris en charge
+
             }
     ```
 
@@ -292,9 +490,13 @@ Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au p
     * de la notification.
     */
     function postPaymentProcessing(notify_data){
+
+        // 0. La fonction est appelée lors de la reception d'un statut final par le developpeur
        
         let transaction_id = notify_data.cpm_trans_id; 
         let site_id        = notify_data.cpm_site_id;
+
+        // 1. Recuperation du statut final de la transaction
 
         /*
             On suppose que la fonction verifyPaymentStatus 
@@ -303,27 +505,178 @@ Avec ces données vous pourrez vérifier l'état d'un paiement et procéder au p
         */
         transaction_status = verifyPaymentStatus(transaction_id, site_id);
 
-        // Récupère le statut du paiement
-        let trans_status_message = transaction_status["message"];
+        // 2. Lecture du statut du paiement
+        let trans_status_message = transaction_status.message;
 
-        if(trans_status_message == "SUCCESS"){
+        // 3. Analyse du statut final
+
+        if(trans_status_message == "SUCCESS"){ // En cas de succès
+            
+            // 4. Vérifier si le paiement est deja a success
+
+            /*
+                On suppose que la fonction checkIfPaymentIsAlreadySuccess 
+                permet de vérifier que le paiement est déjà à succès dans la base de données des paiments du site
+            */
+
             if(checkIfPaymentIsAlreadySuccess()){
-                // La transaction a déjà été mise a jour
+
+                // La transaction a déjà été mise à jour
+
             }else{
-                // Mise à jour du statut de paiement
-                updatePaymentStatus(transaction_id);
-                
-                // Envoie d'une notification au client par mail
-                sendClientSuccessPaymentEmail(transaction_id);
 
-                // Envoie d'une notification au client par SMS
-                sendClientSuccessPaymentSMS(transaction_id);
+                // 5. Mettre à jour le statut de paiement
 
-        }else if(trans_status == "PAYMENT_FAILED"){
+                // 6. Envoyer une notification au client par mail
+
+                // 7. Envoyer une notification au client par mail
+
+        }else if(trans_status == "PAYMENT_FAILED" || trans_status == "INSUFFISENT_BALANCE"){
+
             // Annulation de la commande du client concerné
-            cancelClientCommand(transaction_id);
+
         }else{
+
             // Statut non pris en charge
+
+        }
+    }
+    ```
+
+=== "java"
+
+    ``` java linenums="1"
+    /** 
+     * Post-traitement d'un site d'e-commerce avec php 
+     */
+
+    class PostPayment{
+
+        /**
+        * Exemple de code d'un post-traitement.
+        * notify_data est objet contenant les données 
+        * de la notification.
+        */
+        public void postPaymentProcessing(HashMap<String,String> notify_data){
+
+            // 0. La fonction est appelée lors de la reception d'un statut final par le developpeur
+        
+            String transaction_id = notify_data.get("cpm_trans_id"); 
+            String site_id        = notify_data.get("cpm_site_id");
+
+            // 1. Recuperation du statut final de la transaction
+
+            /*
+                On suppose que la fonction verifyPaymentStatus 
+                appel l'endpoint de vérification pour récupérer le statut
+                du paiement
+            */
+            HashMap<String,String> transaction_status = verifyPaymentStatus(transaction_id, site_id);
+
+            // 2. Lecture du statut du paiement
+            String trans_status_message = transaction_status.get("message");
+
+            // 3. Analyse du statut final
+
+            if(trans_status_message.equals("SUCCESS")){ // En cas de succès
+                
+                // 4. Vérifier si le paiement est déjà à success
+
+                /*
+                    On suppose que la fonction checkIfPaymentIsAlreadySuccess 
+                    permet de vérifier que le paiement est déjà à succès dans la base de données des paiments du site
+                */
+
+                if(checkIfPaymentIsAlreadySuccess()){
+
+                    // La transaction a déjà été mise a jour
+
+                }else{
+
+                    // 5. Mettre à jour le statut de paiement
+
+                    // 6. Envoyer une notification au client par mail
+
+                    // 7. Envoyer une notification au client par mail
+
+            }else if(trans_status.equals("PAYMENT_FAILED") || trans_status.equals("INSUFFISENT_BALANCE")){
+
+                // Annulation de la commande du client concerné
+
+            }else{
+
+                // Statut non pris en charge
+
+            }
+        }
+    }
+    ```
+
+=== "C#"
+
+    ``` c# linenums="1"
+    /** 
+     * Post-traitement d'un site d'e-commerce avec php 
+     */
+
+    class PostPayment{
+
+        /**
+        * Exemple de code d'un post-traitement.
+        * notify_data est objet contenant les données 
+        * de la notification.
+        */
+        public void postPaymentProcessing(var notify_data){
+
+            // 0. La fonction est appelée lors de la reception d'un statut final par le developpeur
+        
+            string transaction_id = notify_data.cpm_trans_id; 
+            string site_id        = notify_data.cpm_site_id;
+
+            // 1. Recuperation du statut final de la transaction
+
+            /*
+                On suppose que la fonction verifyPaymentStatus 
+                appel l'endpoint de vérification pour récupérer le statut
+                du paiement
+            */
+            var transaction_status = verifyPaymentStatus(transaction_id, site_id);
+
+            // 2. Lecture du statut du paiement
+            string trans_status_message = transaction_status.message;
+
+            // 3. Analyse du statut final
+
+            if(string.Equals(trans_status_message,"SUCCESS") || string.Equals(trans_status_message,"INSUFFISENT_BALANCE")){ // En cas de succès
+                
+                // 4. Vérifier si le paiement est déjà à success
+
+                /*
+                    On suppose que la fonction checkIfPaymentIsAlreadySuccess 
+                    permet de vérifier que le paiement est déjà à succès dans la base de données des paiments du site
+                */
+
+                if(checkIfPaymentIsAlreadySuccess()){
+
+                    // La transaction a déjà été mise a jour
+
+                }else{
+
+                    // 5. Mettre à jour le statut de paiement
+
+                    // 6. Envoyer une notification au client par mail
+
+                    // 7. Envoyer une notification au client par mail
+
+            }else if(string.Equals(trans_status_message,"PAYMENT_FAILED")){
+
+                // Annulation de la commande du client concerné
+
+            }else{
+
+                // Statut non pris en charge
+
+            }
         }
     }
     ```
@@ -376,9 +729,40 @@ Vous trouverez dans le tableau ci-dessous l'ensemble des paramètres que peut re
 | `phone_number`    | string | Numéro de téléphone                                       |
 | `phone_prefix`    | string | Préfixe du numéro de téléhpone                            |
 
+Les valeurs prises par le propriété `message` sont les suivantes:
+
+| Valeur                                      | Code   |
+|---------------------------------------------|--------|
+| `SUCCES`                                    | `00`   |
+| `PAYMENT_FAILED`                            | `600`  |
+| `INSUFFISENT_BALANCE`                       | `602`  |
+| `SERVICE_UNAVAILABLE`                       | `603`  |
+| `OTP_CODE_ERROR`                            | `604`  |
+| `WAITING_CUSTOMER_TO_VALIDATE`              | `623`  |
+| `TRANSACTION_CANCEL `                       | `627`  |
+| `ERROR_PHONE_NUMBER_NOT_FOUND`              | `635`  |
+| `ERROR_PHONE_NUMBER_NOT_SUPPORTED`          | `636`  |
+| `ERROR_AMOUNT_TOO_LOW`                      | `641`  |
+| `ERROR_AMOUNT_TOO_HIGH`                     | `642`  |
+| `WAITING_CUSTOMER_PAYMENT`                  | `662`  |
+| `WAITING_CUSTOMER_OTP_CODE`                 | `663`  |
+| `WAITING_CUSTOMER_PAYMENT_AT_OPERATOR_SIDE` | `664`  |
+| `OPERATOR_UNAVAILABLE`                      | `804`  |
+| `DAILY_MAX_NUMBER_TRANSACTION_REACHED`      | `807`  |
+| `DAILY_MAX_AMOUNT_TRANSACTION_REACHED`      | `808`  |
+| `MONTHLY_MAX_AMOUNT_TRANSACTION_REACHED`    | `809`  |
+| `MONTHLY_MAX_NUMBER_TRANSACTION_REACHED`    | `810`  |
+| `WEEKLY_MAX_AMOUNT_TRANSACTION_REACHED`     | `811`  |
+| `WEEKLY_MAX_NUMBER_TRANSACTION_REACHED`     | `812`  |
+| `INCORRECT_SETTINGS`                        | `606`  |
+
+
+
 <h5>EXEMPLES</h5>
 
 <h6>EXEMPLE DE REQUETE</h6>
+
+
 
 === "curl"
 
@@ -386,23 +770,153 @@ Vous trouverez dans le tableau ci-dessous l'ensemble des paramètres que peut re
     curl -X POST https://api-checkout.cinetpay.com/v2/payment/check \
     -H "Content-Type: application/json" \
     -d '{
-            "apikey": "@mon-aptkey",
-            "site_id": "@id-de-paiement-hyper-unique",
-            "transaction_id": "@mon-site-id",
+            "apikey": "votre-aptkey",
+            "site_id": "votre-site-id",
+            "transaction_id": "id-de-paiement",
         }'
     ```
 
-=== "Powershell"
+=== "python"
 
-    ``` powershell
+    ``` python
+    import requests
 
-    $Body = @{
-            apikey = "@mon-aptkey",
-            site_id = "@mon-site-id",
-            transaction_id = "@id-de-paiement-hyper-unique",
+    API_KEY = "votre-apikey"
+
+    SITE_ID = "votre-site-id"
+
+    URL = "https://api-checkout.cinetpay.com/v2/payment/check"
+
+    headers = {
+        "Content-Type": "application/json"
     }
 
-    Invoke-RestMethod -Method POST -ContentType "application/json" -Body $body -uri "https://api-checkout.cinetpay.com/v2/payment/check"
+    payment = {
+        "apikey": API_KEY,
+        "site_id": SITE_ID,
+        "transaction_id": "id-de-paiement"
+    }
+
+    response = requests.post(url=URL, headers=headers, json=payment)
+
+    print(response)
+    ```
+
+=== "javascript"
+
+    ``` javascript
+    const axios = require("axios");
+
+    let API_KEY = "votre-apikey";
+
+    let SITE_ID = "votre-site-id";
+
+    let URL = "https://api-checkout.cinetpay.com/v2/payment/check";
+
+    let CONFIG = {
+        headers: {'Content-Type': 'application/json'}
+    }
+
+    let payment = {
+        "apikey": API_KEY,
+        "site_id": SITE_ID,
+        "transaction_id": "id-de-paiement", 
+    }
+
+    axios.post(URL,payment,CONFIG)
+        .then(function(api_response){
+
+            let response = api_response.data;
+
+            console.log(response);
+
+        })
+        .catch(function(error){
+
+            console.log(error.message);
+
+        });
+    ```
+
+=== "java"
+
+    ``` java
+    public class InitPayment {
+	
+        public static void main(String[] args) throws IOException, InterruptedException {
+        
+            String API_KEY = "votre-apikey"; 
+            
+            String SITE_ID = "votre-site-id";
+            
+            String URL = "https://api-checkout.cinetpay.com/v2/payment/check";
+            
+            String payment = String.format("{\r\n"
+                    + "        \"apikey\":  \"%s\",\r\n"
+                    + "        \"site_id\": \"%s\",\r\n"
+                    + "        \"transaction_id\": \"id-de-paiement\",\r\n"
+                    + "        \r\n"
+                    + "    }",API_KEY,SITE_ID);
+                        
+            BodyPublisher requestBody = HttpRequest.BodyPublishers.ofString(payment);
+            
+            try {
+                
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(new URI(URL))
+                        .header("Content-Type","application/json")
+                        .POST(requestBody)
+                        .build();
+                
+                HttpResponse<String> response = HttpClient.newHttpClient().send(request, BodyHandlers.ofString());
+                
+                System.out.println(response.body());
+                
+            } catch (URISyntaxException e) {
+
+                e.printStackTrace();
+                
+            }
+          
+        }
+    }
+    ```
+
+=== "C#"
+
+    ``` c#
+    public class InitPayment {
+
+        public async void initPayment(){
+
+            string API_KEY = "votre-apikey"; 
+            
+            string SITE_ID = "votre-site-id";
+            
+            string URL = "https://api-checkout.cinetpay.com/v2/payment/check";
+
+            var payment = new 
+            {
+                apikey = API_KEY,
+                site_id = SITE_ID,
+                transaction_id = "id-de-paiement",
+            };
+
+            string json = JsonConvert.SerializeObject(payment);
+
+            StringContent data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = new HttpClient();
+
+            var response = await client.PostAsync(url, data);
+
+            string result = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine(result);
+            
+        }
+
+    }
     ```
 
 <h6>EXEMPLE DE REPONSE DE SUCCES</h6>
@@ -437,94 +951,6 @@ Vous trouverez dans le tableau ci-dessous l'ensemble des paramètres que peut re
 }
 ```
 
-<h6>EXEMPLE DE FONCTION DE VERIFICATION</h6>
-
-=== "python"
-
-    ```python linenums="1"
-    import requests
-
-    API_KEY = "@mon-aptkey"
-    SITE_ID = "@mon-site-id"
-    URL = "https://api-checkout.cinetpay.com/v2/payment/check"
-
-    def verifyPaymentStatus(transaction_id, site_id):
-
-        headers = {"Content-Type": "application/json}
-
-        data = {
-            "apikey": API_KEY,
-            "site_id": SITE_ID,
-            "transaction_id": transaction_id
-        }
-
-        r = requests.post(url = URL, headers=headers, data = data)
-
-        return r.json()
-    ```
-=== "php"
-
-    ``` PHP linenums="1"
-    <?php 
-        use GuzzleHttp\Client;
-
-        define("API_KEY","@mon-aptkey")
-        define("SITE_ID","@mon-site-id")
-        define("URL","https://api-checkout.cinetpay.com/v2/payment/check")
-
-        function verifyPaymentStatus($transaction_id, $site_id){
-
-            $data = [
-                "apikey" => API_KEY,
-                "site_id" => SITE_ID,
-                "transaction_id" => $transaction_id
-            ];
-
-            $option = [
-                'headers' => [
-                    'Content-Type' => 'application/json'
-                ],
-                'form_params' => $data
-            ];
-
-            $request = new Client();
-            
-            $response = $request->post(URL, $option);
-
-            return $response->getBody();
-
-        }
-    ```
-
-=== "javascript"
-
-    ``` javascript linenums="1"
-    const axios = require("axios");
-
-    const API_KEY = "@mon-aptkey";
-    const SITE_ID = "@mon-site-id";
-    const URL = "https://api-checkout.cinetpay.com/v2/payment/check";
-
-    function verifyPaymentStatus(notify_data){
-        
-        let data = {
-            "apikey": API_KEY,
-            "site_id": SITE_ID,
-            "transaction_id": transaction_id
-        };
-
-        let config = {
-            headers: {'Content-Type': 'application/json'}
-        }
-
-        status = null;
-
-        // Voir https://github.com/axios/axio pour une meilleur comprehension
-        return axios.post(URL,data,config);
-
-    }
-
-    ```
 ---
 
 ## Conclusion
@@ -535,4 +961,4 @@ Au cas où vous ne savez pas quoi faire ou rencontrez des difficultés de compr�
 
 Adresse du support: [support@cinetpay.com](mailto:support@cinetpay.com)
 
-*Dernière mise à jour le 17/08/2021 par Jean-Marc Dje Bi*
+*Dernière mise à jour le 24/08/2021 par Jean-Marc Dje Bi*
