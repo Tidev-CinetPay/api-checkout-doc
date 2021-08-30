@@ -27,6 +27,7 @@ Dans l'intégration l'endpoint d'initialisation vous permet de commencer un paim
 Il s'agira pour vous d'envoyer une requête de type `POST` au endpoint avec les informations qui caractérisent un paiement, en plus d'une url de notification (`notify_url`) et d'une url de retour (`return_url`). 
 
 L'objectif est de générer un lien vers le guichet de paiement. 
+Pour initialiser un paiement vous devez **générer un lien unique vers le guichet de paiement** en envoyant une requête de type `POST` au endpoint, avec les informations caractérisant le paiement, en plus d'une url de notification (`notify_url`) et d'une url de retour (`return_url`). L'objectif est de générer un lien vers le guichet de paiement. 
 
 La reponse de cet endpoint contient en particulier un token (`payment_token`) et le lien vers le guichet (`payment_url`). Utiliser
 ce lien pour rediriger votre client vers le guichet.
