@@ -15,7 +15,7 @@ Toutefois, vous pouvez passer directement à la page qui traite de l'intégratio
 
 Si vous rencontrez des difficultés dans la compréhension de la documention ou dans l'intégration de l'API n'hésitez pas à contactez notre support. De même, nous sommes ouvert à toute suggestion et remarque.
 
-Adresse du support: [support@cinetpay.com](mailto:support@cinetpay.com)
+Adresse du support: [support.technique@cinetpay.com](mailto:support.technique@cinetpay.com)
 
 ## Note de version de la documentation
 
@@ -23,4 +23,4 @@ Adresse du support: [support@cinetpay.com](mailto:support@cinetpay.com)
 |---------|----------|------------------|
 | 1.0.0   | 23/06/21 | Version initiale |
 
-*Dernière mise à jour le 24/08/2021 par Jean-Marc Dje Bi*
+*Dernière mise à jour le 30/08/2021 par Jean-Marc Dje Bi*

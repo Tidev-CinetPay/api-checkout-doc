@@ -46,7 +46,7 @@ Pour obtenir ces deux clés, connectez vous à votre compte marchand et rendez v
 !!! Danger "Attention"
         Retenez bien que l'***API KEY*** et le ***SITEID*** sont indispensables pour réussir l'intégration de l'API.
 
-A ce stade, nous pouvons passer à l'intégration de l'API. Mais il reste un point à présenter. Il s'agit de **la notification**. En effet, seule la notification peut vous permettre de délivrer vos services à vos client car c'est t'elle qui vous permet de savoir si le traitement d'un paiement est terminé.
+A ce stade, nous pouvons passer à l'intégration de l'API. Mais il reste un point à présenter. Il s'agit de **la notification**. En effet, seule la notification peut vous permettre de délivrer vos services à vos client car c'est elle qui vous permet de savoir si le traitement d'un paiement est terminé.
 
 ## La notification
 
@@ -111,7 +111,7 @@ Les points qui suivent sont a considérer pour une bonne intégration.
 
 ### Conseils d'usage
 
-Sachant que l'url de notification peut être appelée plusieurs, et pour vous assurer de l’intégrité des données que vous traitez, vous devez effectuer certaines vérifications à la reception d'une notification:
+Sachant que l'url de notification peut être appelée plusieurs fois, et pour vous assurer de l’intégrité des données que vous traitez, vous devez effectuer certaines vérifications à la reception d'une notification:
 
 1. Votre url de notification doit s'assurer de recevoir des données issus d'un appel en `POST` avec comme données d'entrée le `cpm_trans_id` (correspondant à l'identifiant du paiement) et le `cpm_site_id` (correspondant à votre SITEID)
 
@@ -128,5 +128,5 @@ Sachant que l'url de notification peut être appelée plusieurs, et pour vous as
 
 [Comprendre l'intégration](/integration){ .md-button .md-button--primary }
 
-*Dernière mise à jour le 24/08/2021 par Jean-Marc Dje Bi*
+*Dernière mise à jour le 30/08/2021 par Jean-Marc Dje Bi*
 
